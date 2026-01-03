@@ -10,21 +10,34 @@ export default function Index() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeftIOS, setTimeLeftIOS] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+  const [timeLeftAndroid, setTimeLeftAndroid] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
   useEffect(() => {
-    const targetDate = new Date('2026-12-31T23:59:59').getTime();
+    const iosTargetDate = new Date('2026-12-31T23:59:59').getTime();
+    const now = new Date();
+    const androidTargetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).getTime();
 
     const updateCountdown = () => {
       const now = new Date().getTime();
-      const difference = targetDate - now;
+      
+      const iosDifference = iosTargetDate - now;
+      if (iosDifference > 0) {
+        setTimeLeftIOS({
+          days: Math.floor(iosDifference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((iosDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((iosDifference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((iosDifference % (1000 * 60)) / 1000)
+        });
+      }
 
-      if (difference > 0) {
-        setTimeLeft({
-          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+      const androidDifference = androidTargetDate - now;
+      if (androidDifference > 0) {
+        setTimeLeftAndroid({
+          days: Math.floor(androidDifference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((androidDifference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((androidDifference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((androidDifference % (1000 * 60)) / 1000)
         });
       }
     };
@@ -224,57 +237,73 @@ export default function Index() {
           <h2 className="text-5xl font-bold mb-4 text-gradient">Скачать Запрет</h2>
           <p className="text-xl text-white/70 mb-12">Доступно для iOS и Android</p>
 
-          <div className="mb-16">
-            <Card className="glass p-8 max-w-4xl mx-auto">
-              <h3 className="text-3xl font-bold mb-6 text-white text-center">iOS версия выходит через:</h3>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+          <div className="mb-16 grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
+            <Card className="glass p-8">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="text-4xl">🤖</div>
+                <h3 className="text-2xl font-bold text-white">Android релиз через:</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
                 <div className="text-center">
-                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.days}</div>
-                  <div className="text-white/60 text-sm md:text-base">Дней</div>
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftAndroid.days}</div>
+                  <div className="text-white/60 text-sm">Дней</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.hours}</div>
-                  <div className="text-white/60 text-sm md:text-base">Часов</div>
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftAndroid.hours}</div>
+                  <div className="text-white/60 text-sm">Часов</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.minutes}</div>
-                  <div className="text-white/60 text-sm md:text-base">Минут</div>
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftAndroid.minutes}</div>
+                  <div className="text-white/60 text-sm">Минут</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.seconds}</div>
-                  <div className="text-white/60 text-sm md:text-base">Секунд</div>
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftAndroid.seconds}</div>
+                  <div className="text-white/60 text-sm">Секунд</div>
                 </div>
               </div>
-              <p className="text-center text-white/70 mt-6">Запланированный релиз: конец 2026 года</p>
+              <Badge className="bg-gradient-to-r from-secondary to-accent mt-6 w-full justify-center py-2">Google Play</Badge>
+            </Card>
+
+            <Card className="glass p-8">
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="text-4xl">🍎</div>
+                <h3 className="text-2xl font-bold text-white">iOS релиз через:</h3>
+              </div>
+              <div className="grid grid-cols-2 gap-4">
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftIOS.days}</div>
+                  <div className="text-white/60 text-sm">Дней</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftIOS.hours}</div>
+                  <div className="text-white/60 text-sm">Часов</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftIOS.minutes}</div>
+                  <div className="text-white/60 text-sm">Минут</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-4xl md:text-5xl font-bold text-gradient mb-2">{timeLeftIOS.seconds}</div>
+                  <div className="text-white/60 text-sm">Секунд</div>
+                </div>
+              </div>
+              <Badge className="bg-gradient-to-r from-primary to-secondary mt-6 w-full justify-center py-2">App Store</Badge>
             </Card>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
-            <Card className="glass p-8 flex-1 w-full hover-scale cursor-pointer group relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-              <div className="relative z-10">
-                <div className="text-6xl mb-4">🍎</div>
-                <h3 className="text-2xl font-bold mb-2 text-white">App Store</h3>
-                <p className="text-white/60 mb-4">для iPhone и iPad</p>
-                <Badge className="bg-gradient-to-r from-primary to-secondary mb-2">Скоро</Badge>
-                <div className="text-sm text-white/50">iOS 14.0+</div>
-              </div>
-            </Card>
-
-            <Card className="glass p-8 flex-1 w-full hover-scale cursor-pointer group">
-              <div className="text-6xl mb-4">🤖</div>
-              <h3 className="text-2xl font-bold mb-2 text-white">Google Play</h3>
-              <p className="text-white/60 mb-4">для Android</p>
-              <Badge className="bg-gradient-to-r from-secondary to-accent mb-2">Доступно</Badge>
-              <div className="text-sm text-white/50">Android 8.0+</div>
-            </Card>
-          </div>
-
-          <div className="mt-12 flex items-center justify-center gap-4 text-white/60">
-            <Icon name="Star" size={20} className="text-yellow-400" />
-            <span className="text-lg">4.8 из 5 звёзд</span>
-            <span>•</span>
-            <span className="text-lg">2.5M+ загрузок</span>
+          <div className="text-center">
+            <p className="text-white/70 text-lg">Подпишись на уведомления о релизе</p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-6 max-w-md mx-auto">
+              <Input 
+                type="email" 
+                placeholder="Ваш email"
+                className="glass border-white/20 text-white placeholder:text-white/40"
+              />
+              <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 w-full sm:w-auto">
+                <Icon name="Bell" className="mr-2" size={20} />
+                Уведомить
+              </Button>
+            </div>
           </div>
         </div>
       </section>
