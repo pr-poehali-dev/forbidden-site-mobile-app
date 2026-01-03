@@ -10,6 +10,9 @@ export default function Index() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [subscribeEmail, setSubscribeEmail] = useState('');
+  const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [subscribeMessage, setSubscribeMessage] = useState('');
   const [timeLeftIOS, setTimeLeftIOS] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timeLeftAndroid, setTimeLeftAndroid] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -47,6 +50,45 @@ export default function Index() {
 
     return () => clearInterval(interval);
   }, []);
+
+  const handleSubscribe = async () => {
+    if (!subscribeEmail.trim()) {
+      setSubscribeStatus('error');
+      setSubscribeMessage('Введите email');
+      return;
+    }
+
+    setSubscribeStatus('loading');
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/0272791d-8293-450f-a122-442c6e77bb40', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email: subscribeEmail })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setSubscribeStatus('success');
+        setSubscribeMessage(data.message);
+        setSubscribeEmail('');
+      } else {
+        setSubscribeStatus('error');
+        setSubscribeMessage(data.error || 'Ошибка подписки');
+      }
+    } catch (error) {
+      setSubscribeStatus('error');
+      setSubscribeMessage('Ошибка соединения');
+    }
+
+    setTimeout(() => {
+      setSubscribeStatus('idle');
+      setSubscribeMessage('');
+    }, 5000);
+  };
 
   const features = [
     {
@@ -297,13 +339,25 @@ export default function Index() {
               <Input 
                 type="email" 
                 placeholder="Ваш email"
+                value={subscribeEmail}
+                onChange={(e) => setSubscribeEmail(e.target.value)}
+                disabled={subscribeStatus === 'loading'}
                 className="glass border-white/20 text-white placeholder:text-white/40"
               />
-              <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 w-full sm:w-auto">
+              <Button 
+                onClick={handleSubscribe}
+                disabled={subscribeStatus === 'loading'}
+                className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 w-full sm:w-auto"
+              >
                 <Icon name="Bell" className="mr-2" size={20} />
-                Уведомить
+                {subscribeStatus === 'loading' ? 'Подписка...' : 'Уведомить'}
               </Button>
             </div>
+            {subscribeMessage && (
+              <p className={`mt-4 text-sm ${subscribeStatus === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {subscribeMessage}
+              </p>
+            )}
           </div>
         </div>
       </section>
@@ -385,13 +439,21 @@ export default function Index() {
         </div>
       </section>
 
-      <footer className="py-8 px-4 border-t border-white/10">
-        <div className="container mx-auto text-center text-white/60">
-          <p className="mb-4">© 2026 Запрет. Все права защищены.</p>
-          <div className="flex justify-center gap-6 text-sm">
-            <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
-            <a href="#" className="hover:text-white transition-colors">Условия использования</a>
-            <a href="#" className="hover:text-white transition-colors">Поддержка</a>
+      <footer className="py-12 px-4 border-t border-white/10">
+        <div className="container mx-auto">
+          <div className="text-center mb-8">
+            <p className="text-white/80 text-lg mb-2">Идея проекта</p>
+            <p className="text-2xl font-bold text-gradient mb-1">Данил Денисович</p>
+            <p className="text-white/60">ООО Strix Rp</p>
+          </div>
+          
+          <div className="text-center text-white/60">
+            <p className="mb-4">© 2026 Запрет. Все права защищены.</p>
+            <div className="flex justify-center gap-6 text-sm flex-wrap">
+              <a href="#" className="hover:text-white transition-colors">Политика конфиденциальности</a>
+              <a href="#" className="hover:text-white transition-colors">Условия использования</a>
+              <a href="#" className="hover:text-white transition-colors">Поддержка</a>
+            </div>
           </div>
         </div>
       </footer>
