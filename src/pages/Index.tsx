@@ -92,6 +92,11 @@ export default function Index() {
 
   const features = [
     {
+      icon: 'DollarSign',
+      title: '100% Бесплатно',
+      description: 'Навсегда бесплатно. Без подписок, без скрытых платежей, без ограничений'
+    },
+    {
       icon: 'Globe',
       title: 'Открытый интернет',
       description: 'Доступ к любым заблокированным сайтам и сервисам без ограничений'
@@ -110,11 +115,6 @@ export default function Index() {
       icon: 'Lock',
       title: 'Шифрование',
       description: 'Военное шифрование трафика для максимальной безопасности'
-    },
-    {
-      icon: 'Wifi',
-      title: 'Безопасный Wi-Fi',
-      description: 'Защита при подключении к публичным сетям Wi-Fi'
     },
     {
       icon: 'Smartphone',
@@ -216,11 +216,17 @@ export default function Index() {
         
         <div className="container mx-auto text-center relative z-10">
           <div className="animate-fade-in">
+            <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-lg px-6 py-2 mb-6 animate-glow">
+              🎉 100% БЕСПЛАТНО
+            </Badge>
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-gradient leading-tight">
               Интернет<br />без границ
             </h1>
-            <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto">
+            <p className="text-xl md:text-2xl text-white/80 mb-4 max-w-3xl mx-auto">
               Свободный доступ к любым сайтам. Быстро, безопасно, анонимно.
+            </p>
+            <p className="text-2xl md:text-3xl font-bold text-green-400 mb-12">
+              Бесплатно навсегда. Без подписок.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg px-8 py-6 hover-scale">
@@ -276,8 +282,12 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"></div>
         
         <div className="container mx-auto text-center relative z-10">
+          <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xl px-8 py-3 mb-6 animate-glow inline-block">
+            ✨ ПОЛНОСТЬЮ БЕСПЛАТНО ✨
+          </Badge>
           <h2 className="text-5xl font-bold mb-4 text-gradient">Скачать Запрет</h2>
-          <p className="text-xl text-white/70 mb-12">Доступно для iOS и Android</p>
+          <p className="text-xl text-white/70 mb-2">Доступно для iOS и Android</p>
+          <p className="text-lg text-green-400 font-semibold mb-12">Никаких скрытых платежей и ограничений</p>
 
           <div className="mb-16 grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
             <Card className="glass p-8">
@@ -303,7 +313,10 @@ export default function Index() {
                   <div className="text-white/60 text-sm">Секунд</div>
                 </div>
               </div>
-              <Badge className="bg-gradient-to-r from-secondary to-accent mt-6 w-full justify-center py-2">Google Play</Badge>
+              <div className="space-y-2 mt-6">
+                <Badge className="bg-gradient-to-r from-secondary to-accent w-full justify-center py-2">Google Play</Badge>
+                <Badge className="bg-green-500 text-white w-full justify-center py-2">Бесплатно навсегда</Badge>
+              </div>
             </Card>
 
             <Card className="glass p-8">
@@ -329,7 +342,10 @@ export default function Index() {
                   <div className="text-white/60 text-sm">Секунд</div>
                 </div>
               </div>
-              <Badge className="bg-gradient-to-r from-primary to-secondary mt-6 w-full justify-center py-2">App Store</Badge>
+              <div className="space-y-2 mt-6">
+                <Badge className="bg-gradient-to-r from-primary to-secondary w-full justify-center py-2">App Store</Badge>
+                <Badge className="bg-green-500 text-white w-full justify-center py-2">Бесплатно навсегда</Badge>
+              </div>
             </Card>
           </div>
 
