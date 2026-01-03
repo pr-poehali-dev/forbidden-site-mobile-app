@@ -13,55 +13,55 @@ export default function Index() {
 
   const features = [
     {
-      icon: 'Users',
-      title: 'Живое сообщество',
-      description: 'Встречайте людей со схожими интересами и создавайте новые связи'
-    },
-    {
-      icon: 'MessageCircle',
-      title: 'Мгновенные чаты',
-      description: 'Общайтесь в реальном времени с друзьями и группами'
-    },
-    {
-      icon: 'Zap',
-      title: 'Умные рекомендации',
-      description: 'Алгоритм подбирает контент специально для вас'
+      icon: 'Globe',
+      title: 'Открытый интернет',
+      description: 'Доступ к любым заблокированным сайтам и сервисам без ограничений'
     },
     {
       icon: 'Shield',
-      title: 'Безопасность',
-      description: 'Защита данных и приватность на первом месте'
+      title: 'Анонимность',
+      description: 'Полная конфиденциальность и защита ваших данных от слежки'
     },
     {
-      icon: 'Heart',
-      title: 'Лайки и реакции',
-      description: 'Выражайте эмоции с помощью богатой системы реакций'
+      icon: 'Zap',
+      title: 'Высокая скорость',
+      description: 'Быстрое соединение без потери качества и скорости интернета'
     },
     {
-      icon: 'TrendingUp',
-      title: 'Тренды',
-      description: 'Следите за актуальными темами и будьте в курсе событий'
+      icon: 'Lock',
+      title: 'Шифрование',
+      description: 'Военное шифрование трафика для максимальной безопасности'
+    },
+    {
+      icon: 'Wifi',
+      title: 'Безопасный Wi-Fi',
+      description: 'Защита при подключении к публичным сетям Wi-Fi'
+    },
+    {
+      icon: 'Smartphone',
+      title: 'Простота использования',
+      description: 'Подключение одной кнопкой, никаких сложных настроек'
     }
   ];
 
   const reviews = [
     {
-      name: 'Анна Петрова',
+      name: 'Дмитрий С.',
       rating: 5,
-      text: 'Лучшее приложение для общения! Нашла столько единомышленников!',
-      avatar: '👩🏻'
-    },
-    {
-      name: 'Максим Козлов',
-      rating: 5,
-      text: 'Интерфейс просто огонь, все интуитивно понятно',
+      text: 'Наконец-то могу смотреть YouTube без тормозов! Работает стабильно.',
       avatar: '👨🏻'
     },
     {
-      name: 'Елена Смирнова',
-      rating: 4,
-      text: 'Отличная альтернатива другим социальным сетям. Рекомендую!',
-      avatar: '👱🏻‍♀️'
+      name: 'Мария К.',
+      rating: 5,
+      text: 'Лучший VPN из всех, что пробовала. Быстрый и надёжный!',
+      avatar: '👩🏻'
+    },
+    {
+      name: 'Алексей В.',
+      rating: 5,
+      text: 'Простое подключение, высокая скорость. Рекомендую всем!',
+      avatar: '👨🏼'
     }
   ];
 
@@ -138,10 +138,10 @@ export default function Index() {
         <div className="container mx-auto text-center relative z-10">
           <div className="animate-fade-in">
             <h1 className="text-6xl md:text-7xl lg:text-8xl font-bold mb-6 text-gradient leading-tight">
-              Новый уровень<br />социального общения
+              Интернет<br />без границ
             </h1>
             <p className="text-xl md:text-2xl text-white/80 mb-12 max-w-3xl mx-auto">
-              Присоединяйся к Запрет — самому яркому и динамичному сообществу для настоящих друзей
+              Свободный доступ к любым сайтам. Быстро, безопасно, анонимно.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
               <Button size="lg" className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-lg px-8 py-6 hover-scale">
@@ -158,8 +158,8 @@ export default function Index() {
             <div className="w-full max-w-4xl mx-auto glass rounded-3xl p-8 shadow-2xl">
               <div className="aspect-video rounded-2xl overflow-hidden">
                 <img 
-                  src="https://cdn.poehali.dev/projects/39461615-d33a-4888-8018-fdae0e0e5640/files/734fd92b-9195-4f30-b112-8352de70cb53.jpg" 
-                  alt="Запрет App Interface"
+                  src="https://cdn.poehali.dev/projects/39461615-d33a-4888-8018-fdae0e0e5640/files/38f7f719-4d3e-4270-8e66-5b6345ce73fb.jpg" 
+                  alt="Запрет VPN App Interface"
                   className="w-full h-full object-cover"
                 />
               </div>
@@ -171,8 +171,8 @@ export default function Index() {
       <section id="features" className="py-20 px-4">
         <div className="container mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-5xl font-bold mb-4 text-gradient">Возможности приложения</h2>
-            <p className="text-xl text-white/70">Всё, что нужно для комфортного общения</p>
+            <h2 className="text-5xl font-bold mb-4 text-gradient">Почему Запрет?</h2>
+            <p className="text-xl text-white/70">Надёжная защита и свобода в сети</p>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -197,8 +197,8 @@ export default function Index() {
         <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"></div>
         
         <div className="container mx-auto text-center relative z-10">
-          <h2 className="text-5xl font-bold mb-4 text-gradient">Скачать приложение</h2>
-          <p className="text-xl text-white/70 mb-12">Доступно на всех платформах</p>
+          <h2 className="text-5xl font-bold mb-4 text-gradient">Скачать Запрет</h2>
+          <p className="text-xl text-white/70 mb-12">Доступно для iOS и Android</p>
 
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
             <Card className="glass p-8 flex-1 w-full hover-scale cursor-pointer group">
@@ -258,8 +258,8 @@ export default function Index() {
         
         <div className="container mx-auto max-w-2xl relative z-10">
           <Card className="glass p-8 md:p-12">
-            <h2 className="text-4xl font-bold mb-4 text-gradient text-center">Свяжитесь с нами</h2>
-            <p className="text-white/70 mb-8 text-center">Есть вопросы? Мы всегда на связи!</p>
+            <h2 className="text-4xl font-bold mb-4 text-gradient text-center">Поддержка</h2>
+            <p className="text-white/70 mb-8 text-center">Нужна помощь? Напишите нам!</p>
 
             <div className="space-y-4">
               <div>
