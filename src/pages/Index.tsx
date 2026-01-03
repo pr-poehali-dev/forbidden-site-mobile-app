@@ -4,12 +4,36 @@ import { Badge } from '@/components/ui/badge';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Index() {
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [timeLeft, setTimeLeft] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+
+  useEffect(() => {
+    const targetDate = new Date('2026-12-31T23:59:59').getTime();
+
+    const updateCountdown = () => {
+      const now = new Date().getTime();
+      const difference = targetDate - now;
+
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((difference % (1000 * 60)) / 1000)
+        });
+      }
+    };
+
+    updateCountdown();
+    const interval = setInterval(updateCountdown, 1000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const features = [
     {
@@ -200,19 +224,49 @@ export default function Index() {
           <h2 className="text-5xl font-bold mb-4 text-gradient">Скачать Запрет</h2>
           <p className="text-xl text-white/70 mb-12">Доступно для iOS и Android</p>
 
+          <div className="mb-16">
+            <Card className="glass p-8 max-w-4xl mx-auto">
+              <h3 className="text-3xl font-bold mb-6 text-white text-center">iOS версия выходит через:</h3>
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8">
+                <div className="text-center">
+                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.days}</div>
+                  <div className="text-white/60 text-sm md:text-base">Дней</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.hours}</div>
+                  <div className="text-white/60 text-sm md:text-base">Часов</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.minutes}</div>
+                  <div className="text-white/60 text-sm md:text-base">Минут</div>
+                </div>
+                <div className="text-center">
+                  <div className="text-5xl md:text-6xl font-bold text-gradient mb-2">{timeLeft.seconds}</div>
+                  <div className="text-white/60 text-sm md:text-base">Секунд</div>
+                </div>
+              </div>
+              <p className="text-center text-white/70 mt-6">Запланированный релиз: конец 2026 года</p>
+            </Card>
+          </div>
+
           <div className="flex flex-col sm:flex-row gap-6 justify-center items-center max-w-2xl mx-auto">
-            <Card className="glass p-8 flex-1 w-full hover-scale cursor-pointer group">
-              <div className="text-6xl mb-4">🍎</div>
-              <h3 className="text-2xl font-bold mb-2 text-white">App Store</h3>
-              <p className="text-white/60 mb-4">для iPhone и iPad</p>
-              <Badge className="bg-gradient-to-r from-primary to-secondary">iOS 14.0+</Badge>
+            <Card className="glass p-8 flex-1 w-full hover-scale cursor-pointer group relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+              <div className="relative z-10">
+                <div className="text-6xl mb-4">🍎</div>
+                <h3 className="text-2xl font-bold mb-2 text-white">App Store</h3>
+                <p className="text-white/60 mb-4">для iPhone и iPad</p>
+                <Badge className="bg-gradient-to-r from-primary to-secondary mb-2">Скоро</Badge>
+                <div className="text-sm text-white/50">iOS 14.0+</div>
+              </div>
             </Card>
 
             <Card className="glass p-8 flex-1 w-full hover-scale cursor-pointer group">
               <div className="text-6xl mb-4">🤖</div>
               <h3 className="text-2xl font-bold mb-2 text-white">Google Play</h3>
               <p className="text-white/60 mb-4">для Android</p>
-              <Badge className="bg-gradient-to-r from-secondary to-accent">Android 8.0+</Badge>
+              <Badge className="bg-gradient-to-r from-secondary to-accent mb-2">Доступно</Badge>
+              <div className="text-sm text-white/50">Android 8.0+</div>
             </Card>
           </div>
 
