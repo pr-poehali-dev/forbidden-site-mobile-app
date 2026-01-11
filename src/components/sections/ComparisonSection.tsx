@@ -2,6 +2,7 @@ import { Card } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const comparisons = [
   {
@@ -43,11 +44,13 @@ const comparisons = [
 ];
 
 export default function ComparisonSection() {
+  const { ref, isVisible } = useScrollAnimation();
+  
   return (
-    <section id="comparison" className="py-20 px-4 relative overflow-hidden">
+    <section ref={ref as any} id="comparison" className="py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10"></div>
       
-      <div className="container mx-auto relative z-10">
+      <div className={`container mx-auto relative z-10 transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="text-center mb-16">
           <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-lg px-6 py-2 mb-6 inline-block">
             💎 Сравнение

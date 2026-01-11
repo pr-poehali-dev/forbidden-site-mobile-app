@@ -6,7 +6,10 @@ import FeaturesSection from '@/components/sections/FeaturesSection';
 import DownloadSection from '@/components/sections/DownloadSection';
 import ReviewsSection from '@/components/sections/ReviewsSection';
 import ContactSection from '@/components/sections/ContactSection';
+import FAQSection from '@/components/sections/FAQSection';
+import StatsSection from '@/components/sections/StatsSection';
 import Footer from '@/components/sections/Footer';
+import ScrollToTop from '@/components/ui/ScrollToTop';
 
 export default function Index() {
   const [email, setEmail] = useState('');
@@ -15,6 +18,8 @@ export default function Index() {
   const [subscribeEmail, setSubscribeEmail] = useState('');
   const [subscribeStatus, setSubscribeStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [subscribeMessage, setSubscribeMessage] = useState('');
+  const [contactStatus, setContactStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [contactMessage, setContactMessage] = useState('');
   const [timeLeftIOS, setTimeLeftIOS] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
   const [timeLeftAndroid, setTimeLeftAndroid] = useState({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
@@ -23,8 +28,17 @@ export default function Index() {
     const now = new Date();
     const androidTargetDate = new Date(now.getTime() + 30 * 24 * 60 * 60 * 1000).getTime();
 
-    const updateCountdown = () => {
-      const now = new Date().getTime();
+    let rafId: number;
+    let lastUpdate = 0;
+
+    const updateCountdown = (timestamp: number) => {
+      if (timestamp - lastUpdate < 1000) {
+        rafId = requestAnimationFrame(updateCountdown);
+        return;
+      }
+      
+      lastUpdate = timestamp;
+      const now = Date.now();
       
       const iosDifference = iosTargetDate - now;
       if (iosDifference > 0) {
@@ -45,12 +59,13 @@ export default function Index() {
           seconds: Math.floor((androidDifference % (1000 * 60)) / 1000)
         });
       }
+      
+      rafId = requestAnimationFrame(updateCountdown);
     };
 
-    updateCountdown();
-    const interval = setInterval(updateCountdown, 1000);
+    rafId = requestAnimationFrame(updateCountdown);
 
-    return () => clearInterval(interval);
+    return () => cancelAnimationFrame(rafId);
   }, []);
 
   const handleSubscribe = async () => {
@@ -92,6 +107,52 @@ export default function Index() {
     }, 5000);
   };
 
+  const handleContactSubmit = async () => {
+    if (!email.trim()) {
+      setContactStatus('error');
+      setContactMessage('Введите email');
+      return;
+    }
+
+    if (!message.trim() || message.trim().length < 10) {
+      setContactStatus('error');
+      setContactMessage('Сообщение должно содержать минимум 10 символов');
+      return;
+    }
+
+    setContactStatus('loading');
+
+    try {
+      const response = await fetch('https://functions.poehali.dev/2fa2034b-50ec-499c-bb46-47af2b7b35c6', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ email, message })
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
+        setContactStatus('success');
+        setContactMessage(data.message);
+        setEmail('');
+        setMessage('');
+      } else {
+        setContactStatus('error');
+        setContactMessage(data.error || 'Ошибка отправки');
+      }
+    } catch (error) {
+      setContactStatus('error');
+      setContactMessage('Ошибка соединения');
+    }
+
+    setTimeout(() => {
+      setContactStatus('idle');
+      setContactMessage('');
+    }, 5000);
+  };
+
   return (
     <div className="min-h-screen relative">
       <div className="fixed inset-0 z-0">
@@ -103,7 +164,8 @@ export default function Index() {
             backgroundSize: 'cover',
             backgroundPosition: 'center',
             backgroundRepeat: 'no-repeat',
-            filter: 'blur(8px)'
+            filter: 'blur(8px)',
+            willChange: 'transform'
           }}
         ></div>
         <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/70 to-background"></div>
@@ -113,6 +175,7 @@ export default function Index() {
         <HeroSection />
         <ComparisonSection />
         <FeaturesSection />
+        <StatsSection />
         <DownloadSection 
           timeLeftIOS={timeLeftIOS}
           timeLeftAndroid={timeLeftAndroid}
@@ -123,14 +186,19 @@ export default function Index() {
           handleSubscribe={handleSubscribe}
         />
         <ReviewsSection />
+        <FAQSection />
         <ContactSection 
           email={email}
           setEmail={setEmail}
           message={message}
           setMessage={setMessage}
+          contactStatus={contactStatus}
+          contactMessage={contactMessage}
+          handleContactSubmit={handleContactSubmit}
         />
         <Footer />
       </div>
+      <ScrollToTop />
     </div>
   );
 }

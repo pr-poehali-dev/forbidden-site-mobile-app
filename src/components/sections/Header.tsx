@@ -1,5 +1,6 @@
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 interface HeaderProps {
   isMenuOpen: boolean;
@@ -7,31 +8,49 @@ interface HeaderProps {
 }
 
 export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
+  const { language, setLanguage, t } = useLanguage();
+
   return (
     <header className="fixed top-0 w-full z-50 glass border-b border-white/10">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between">
         <div className="text-2xl font-bold text-gradient">Запрет</div>
         
-        <nav className="hidden md:flex gap-6">
-          <a href="#features" className="text-white/80 hover:text-white transition-colors">Возможности</a>
-          <a href="#download" className="text-white/80 hover:text-white transition-colors">Скачать</a>
-          <a href="#reviews" className="text-white/80 hover:text-white transition-colors">Отзывы</a>
-          <a href="#contact" className="text-white/80 hover:text-white transition-colors">Контакты</a>
+        <nav className="hidden md:flex gap-6 items-center">
+          <a href="#features" className="text-white/80 hover:text-white transition-colors">{t('nav.features')}</a>
+          <a href="#download" className="text-white/80 hover:text-white transition-colors">{t('nav.download')}</a>
+          <a href="#reviews" className="text-white/80 hover:text-white transition-colors">{t('nav.reviews')}</a>
+          <a href="#contact" className="text-white/80 hover:text-white transition-colors">{t('nav.contact')}</a>
+          
+          <button
+            onClick={() => setLanguage(language === 'ru' ? 'en' : 'ru')}
+            className="text-white/80 hover:text-white transition-colors font-medium text-sm px-3 py-1 rounded-lg glass"
+          >
+            {language === 'ru' ? 'EN' : 'RU'}
+          </button>
         </nav>
         
         <div className="hidden md:block">
           <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90">
-            Войти
+            {t('nav.login')}
           </Button>
         </div>
 
-        <button 
-          className="md:hidden text-white p-2"
-          onClick={() => setIsMenuOpen(!isMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          <Icon name={isMenuOpen ? "X" : "Menu"} size={28} />
-        </button>
+        <div className="md:hidden flex items-center gap-2">
+          <button
+            onClick={() => setLanguage(language === 'ru' ? 'en' : 'ru')}
+            className="text-white/80 hover:text-white transition-colors font-medium text-sm px-3 py-1 rounded-lg glass"
+          >
+            {language === 'ru' ? 'EN' : 'RU'}
+          </button>
+          
+          <button 
+            className="text-white p-2"
+            onClick={() => setIsMenuOpen(!isMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <Icon name={isMenuOpen ? "X" : "Menu"} size={28} />
+          </button>
+        </div>
       </div>
 
       {isMenuOpen && (
@@ -42,31 +61,31 @@ export default function Header({ isMenuOpen, setIsMenuOpen }: HeaderProps) {
               className="text-white/80 hover:text-white transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Возможности
+              {t('nav.features')}
             </a>
             <a 
               href="#download" 
               className="text-white/80 hover:text-white transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Скачать
+              {t('nav.download')}
             </a>
             <a 
               href="#reviews" 
               className="text-white/80 hover:text-white transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Отзывы
+              {t('nav.reviews')}
             </a>
             <a 
               href="#contact" 
               className="text-white/80 hover:text-white transition-colors py-2"
               onClick={() => setIsMenuOpen(false)}
             >
-              Контакты
+              {t('nav.contact')}
             </a>
             <Button className="bg-gradient-to-r from-primary to-secondary hover:opacity-90 w-full">
-              Войти
+              {t('nav.login')}
             </Button>
           </nav>
         </div>

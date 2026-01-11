@@ -1,0 +1,56 @@
+{
+  "tests": [
+    {
+      "name": "Send valid contact message",
+      "method": "POST",
+      "body": {
+        "email": "test@example.com",
+        "message": "Здравствуйте, у меня вопрос по приложению"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {
+        "success": true,
+        "message": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Send message with invalid email",
+      "method": "POST",
+      "body": {
+        "email": "invalid-email",
+        "message": "Тестовое сообщение"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Send message with short text",
+      "method": "POST",
+      "body": {
+        "email": "test@example.com",
+        "message": "Короко"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "Send message without email",
+      "method": "POST",
+      "body": {
+        "message": "Тестовое сообщение длиннее 10 символов"
+      },
+      "expectedStatus": 400,
+      "expectedBody": {
+        "error": "string"
+      },
+      "bodyMatcher": "partial"
+    }
+  ]
+}

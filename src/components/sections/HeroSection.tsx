@@ -39,6 +39,7 @@ export default function HeroSection() {
                 src="https://cdn.poehali.dev/projects/39461615-d33a-4888-8018-fdae0e0e5640/files/38f7f719-4d3e-4270-8e66-5b6345ce73fb.jpg" 
                 alt="Запрет VPN App Interface"
                 className="w-full h-full object-cover"
+                loading="eager"
               />
             </div>
           </div>

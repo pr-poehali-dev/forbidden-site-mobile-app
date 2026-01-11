@@ -9,9 +9,20 @@ interface ContactSectionProps {
   setEmail: (value: string) => void;
   message: string;
   setMessage: (value: string) => void;
+  contactStatus: 'idle' | 'loading' | 'success' | 'error';
+  contactMessage: string;
+  handleContactSubmit: () => void;
 }
 
-export default function ContactSection({ email, setEmail, message, setMessage }: ContactSectionProps) {
+export default function ContactSection({ 
+  email, 
+  setEmail, 
+  message, 
+  setMessage, 
+  contactStatus, 
+  contactMessage, 
+  handleContactSubmit 
+}: ContactSectionProps) {
   return (
     <section id="contact" className="py-20 px-4 relative overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 blur-3xl"></div>
@@ -41,10 +52,20 @@ export default function ContactSection({ email, setEmail, message, setMessage }:
                 className="glass border-white/20 text-white placeholder:text-white/40 min-h-32"
               />
             </div>
-            <Button className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-base md:text-lg py-5 md:py-6">
+            <Button 
+              onClick={handleContactSubmit}
+              disabled={contactStatus === 'loading'}
+              className="w-full bg-gradient-to-r from-primary to-secondary hover:opacity-90 text-base md:text-lg py-5 md:py-6 disabled:opacity-50"
+            >
               <Icon name="Send" className="mr-2" size={18} />
-              Отправить
+              {contactStatus === 'loading' ? 'Отправка...' : 'Отправить'}
             </Button>
+            
+            {contactMessage && (
+              <div className={`text-center text-sm mt-2 ${contactStatus === 'success' ? 'text-green-400' : 'text-red-400'}`}>
+                {contactMessage}
+              </div>
+            )}
           </div>
 
           <div className="mt-8 flex justify-center gap-6">

@@ -1,5 +1,6 @@
 import { Card } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
+import { useScrollAnimation } from '@/hooks/useScrollAnimation';
 
 const features = [
   {
@@ -35,9 +36,11 @@ const features = [
 ];
 
 export default function FeaturesSection() {
+  const { ref, isVisible } = useScrollAnimation();
+  
   return (
-    <section id="features" className="py-20 px-4 relative">
-      <div className="container mx-auto">
+    <section ref={ref as any} id="features" className="py-20 px-4 relative">
+      <div className={`container mx-auto transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Почему Запрет?</h2>
           <p className="text-lg md:text-xl text-white/70">Надёжная защита и свобода в сети</p>
