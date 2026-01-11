@@ -144,8 +144,62 @@ export default function Index() {
     }
   ];
 
+  const comparisons = [
+    {
+      feature: 'Стоимость',
+      zapret: '100% Бесплатно',
+      paid: 'От 500₽/мес',
+      icon: 'DollarSign'
+    },
+    {
+      feature: 'Лимит трафика',
+      zapret: 'Безлимитно',
+      paid: 'Ограничено',
+      icon: 'Infinity'
+    },
+    {
+      feature: 'Скорость',
+      zapret: 'Максимальная',
+      paid: 'Зависит от тарифа',
+      icon: 'Zap'
+    },
+    {
+      feature: 'Серверы',
+      zapret: 'Без ограничений',
+      paid: '5-10 серверов',
+      icon: 'Server'
+    },
+    {
+      feature: 'Реклама',
+      zapret: 'Нет рекламы',
+      paid: 'Есть реклама',
+      icon: 'ShieldOff'
+    },
+    {
+      feature: 'Техподдержка',
+      zapret: '24/7 Поддержка',
+      paid: 'По тарифу',
+      icon: 'Headphones'
+    }
+  ];
+
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen relative">
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-background"></div>
+        <div 
+          className="absolute inset-0 opacity-30" 
+          style={{
+            backgroundImage: 'url(https://cdn.poehali.dev/projects/39461615-d33a-4888-8018-fdae0e0e5640/files/178f0df4-048c-467c-aa0a-18ff864eccae.jpg)',
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            backgroundRepeat: 'no-repeat',
+            filter: 'blur(8px)'
+          }}
+        ></div>
+        <div className="absolute inset-0 bg-gradient-to-b from-background/50 via-background/70 to-background"></div>
+      </div>
+      <div className="relative z-10">
       <header className="fixed top-0 w-full z-50 glass border-b border-white/10">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="text-2xl font-bold text-gradient">Запрет</div>
@@ -212,9 +266,9 @@ export default function Index() {
       </header>
 
       <section className="pt-32 pb-20 px-4 relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-secondary/20 to-accent/20 blur-3xl"></div>
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/30 to-accent/30 blur-3xl animate-pulse"></div>
         
-        <div className="container mx-auto text-center relative z-10">
+        <div className="container mx-auto text-center relative z-20">
           <div className="animate-fade-in">
             <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-lg px-6 py-2 mb-6 animate-glow">
               🎉 100% БЕСПЛАТНО
@@ -253,7 +307,73 @@ export default function Index() {
         </div>
       </section>
 
-      <section id="features" className="py-20 px-4">
+      <section id="comparison" className="py-20 px-4 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-green-500/10 to-emerald-500/10"></div>
+        
+        <div className="container mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-lg px-6 py-2 mb-6 inline-block">
+              💎 Сравнение
+            </Badge>
+            <h2 className="text-5xl font-bold mb-4 text-gradient">Запрет vs Платные VPN</h2>
+            <p className="text-xl text-white/70">Почему платить, если можно пользоваться бесплатно?</p>
+          </div>
+
+          <div className="max-w-5xl mx-auto">
+            <div className="grid gap-4">
+              <div className="grid grid-cols-3 gap-4 mb-2">
+                <div className="text-white/60 text-sm font-semibold"></div>
+                <div className="text-center">
+                  <Badge className="bg-gradient-to-r from-primary to-secondary text-white text-lg px-6 py-2">
+                    🚀 Запрет
+                  </Badge>
+                </div>
+                <div className="text-center">
+                  <Badge variant="outline" className="border-white/20 text-white/60 text-lg px-6 py-2">
+                    💸 Платные VPN
+                  </Badge>
+                </div>
+              </div>
+
+              {comparisons.map((item, index) => (
+                <Card key={index} className="glass p-6 hover-scale">
+                  <div className="grid grid-cols-3 gap-4 items-center">
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
+                        <Icon name={item.icon} size={20} className="text-primary" />
+                      </div>
+                      <span className="text-white font-semibold">{item.feature}</span>
+                    </div>
+                    <div className="text-center">
+                      <Badge className="bg-green-500/20 text-green-400 border border-green-500/30 px-4 py-2 text-base">
+                        ✓ {item.zapret}
+                      </Badge>
+                    </div>
+                    <div className="text-center">
+                      <Badge variant="outline" className="border-red-500/30 text-red-400 px-4 py-2 text-base">
+                        ✗ {item.paid}
+                      </Badge>
+                    </div>
+                  </div>
+                </Card>
+              ))}
+            </div>
+
+            <div className="mt-12 text-center">
+              <Card className="glass p-8 border-2 border-green-500/30">
+                <h3 className="text-3xl font-bold text-green-400 mb-3">Экономия более 6000₽ в год!</h3>
+                <p className="text-white/80 text-lg mb-6">Используй Запрет бесплатно и получай всё, за что другие платят</p>
+                <Button size="lg" className="bg-gradient-to-r from-green-500 to-green-600 hover:opacity-90 text-white text-lg px-8 py-6">
+                  <Icon name="Download" className="mr-2" size={24} />
+                  Скачать бесплатно
+                </Button>
+              </Card>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="features" className="py-20 px-4 relative">
         <div className="container mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-5xl font-bold mb-4 text-gradient">Почему Запрет?</h2>
@@ -455,7 +575,7 @@ export default function Index() {
         </div>
       </section>
 
-      <footer className="py-12 px-4 border-t border-white/10">
+      <footer className="py-12 px-4 border-t border-white/10 relative">
         <div className="container mx-auto">
           <div className="text-center mb-8">
             <p className="text-white/80 text-lg mb-2">Идея проекта</p>
@@ -473,6 +593,7 @@ export default function Index() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }
