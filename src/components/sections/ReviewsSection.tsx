@@ -27,15 +27,15 @@ export default function ReviewsSection() {
     <section id="reviews" className="py-20 px-4">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-gradient">Отзывы пользователей</h2>
-          <p className="text-xl text-white/70">Что говорят о нас</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Отзывы пользователей</h2>
+          <p className="text-lg md:text-xl text-white/70">Что говорят о нас</p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {reviews.map((review, index) => (
             <Card key={index} className="glass p-6 hover-scale">
               <div className="flex items-center gap-4 mb-4">
-                <div className="text-4xl">{review.avatar}</div>
+                <div className="text-4xl flex-shrink-0">{review.avatar}</div>
                 <div>
                   <h4 className="font-bold text-white">{review.name}</h4>
                   <div className="flex gap-1">
@@ -45,7 +45,7 @@ export default function ReviewsSection() {
                   </div>
                 </div>
               </div>
-              <p className="text-white/80">{review.text}</p>
+              <p className="text-white/80 text-sm md:text-base">{review.text}</p>
             </Card>
           ))}
         </div>

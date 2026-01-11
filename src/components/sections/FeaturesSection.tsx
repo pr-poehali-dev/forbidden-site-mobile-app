@@ -39,22 +39,21 @@ export default function FeaturesSection() {
     <section id="features" className="py-20 px-4 relative">
       <div className="container mx-auto">
         <div className="text-center mb-16">
-          <h2 className="text-5xl font-bold mb-4 text-gradient">Почему Запрет?</h2>
-          <p className="text-xl text-white/70">Надёжная защита и свобода в сети</p>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Почему Запрет?</h2>
+          <p className="text-lg md:text-xl text-white/70">Надёжная защита и свобода в сети</p>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
           {features.map((feature, index) => (
             <Card 
               key={index} 
               className="glass p-6 hover-scale cursor-pointer group"
-              style={{ animationDelay: `${index * 0.1}s` }}
             >
               <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-primary to-secondary flex items-center justify-center mb-4 group-hover:animate-glow">
                 <Icon name={feature.icon} size={28} className="text-white" />
               </div>
-              <h3 className="text-2xl font-bold mb-2 text-white">{feature.title}</h3>
-              <p className="text-white/70">{feature.description}</p>
+              <h3 className="text-xl md:text-2xl font-bold mb-2 text-white">{feature.title}</h3>
+              <p className="text-white/70 text-sm md:text-base">{feature.description}</p>
             </Card>
           ))}
         </div>

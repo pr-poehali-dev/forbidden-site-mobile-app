@@ -35,18 +35,18 @@ export default function DownloadSection({
       <div className="absolute inset-0 bg-gradient-to-r from-primary/10 to-secondary/10"></div>
       
       <div className="container mx-auto text-center relative z-10">
-        <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-xl px-8 py-3 mb-6 animate-glow inline-block">
+        <Badge className="bg-gradient-to-r from-green-500 to-green-600 text-white text-base md:text-xl px-6 md:px-8 py-2 md:py-3 mb-6 animate-glow inline-block">
           ✨ ПОЛНОСТЬЮ БЕСПЛАТНО ✨
         </Badge>
-        <h2 className="text-5xl font-bold mb-4 text-gradient">Скачать Запрет</h2>
+        <h2 className="text-4xl md:text-5xl font-bold mb-4 text-gradient">Скачать Запрет</h2>
         <p className="text-xl text-white/70 mb-2">Доступно для iOS и Android</p>
         <p className="text-lg text-green-400 font-semibold mb-12">Никаких скрытых платежей и ограничений</p>
 
         <div className="mb-16 grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
-          <Card className="glass p-8">
-            <div className="flex items-center justify-center gap-3 mb-6">
+          <Card className="glass p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
               <div className="text-4xl">🤖</div>
-              <h3 className="text-2xl font-bold text-white">Android релиз через:</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white text-center">Android релиз через:</h3>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
@@ -72,10 +72,10 @@ export default function DownloadSection({
             </div>
           </Card>
 
-          <Card className="glass p-8">
-            <div className="flex items-center justify-center gap-3 mb-6">
+          <Card className="glass p-6 md:p-8">
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mb-6">
               <div className="text-4xl">🍎</div>
-              <h3 className="text-2xl font-bold text-white">iOS релиз через:</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-white text-center">iOS релиз через:</h3>
             </div>
             <div className="grid grid-cols-2 gap-4">
               <div className="text-center">
